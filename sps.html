@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Scissor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 40px 15px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 26px;
+        }
+
+        .scoreboard {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+        }
+
+        .scoreboard span {
+            font-weight: bold;
+        }
+
+        .choices button {
+            padding: 10px 16px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #999;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .choices button:hover {
+            background-color: #e2e6ea;
+        }
+
+        .display p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #0056b3;
+        }
+
+        #reset-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #reset-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Stone Paper Scissor</h1>
+
+        <div class="scoreboard">
+            Player: <span id="player-score">0</span> | 
+            Computer: <span id="computer-score">0</span>
+        </div>
+
+        <div class="choices">
+            <button class="choice-btn" id="Stone">Stone 🪨</button>
+            <button class="choice-btn" id="Paper">Paper 📄</button>
+            <button class="choice-btn" id="Scissor">Scissor ✂️</button>
+        </div>
+
+        <div class="display">
+            <p>Player Choice: <span id="player-choice">-</span></p>
+            <p>Computer Choice: <span id="computer-choice">-</span></p>
+            <p id="result">Choose an option to start!</p>
+        </div>
+
+        <button id="reset-btn">Reset Score</button>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.choice-btn');
+        const playerChoiceText = document.getElementById('player-choice');
+        const computerChoiceText = document.getElementById('computer-choice');
+        const resultText = document.getElementById('result');
+        const playerScoreText = document.getElementById('player-score');
+        const computerScoreText = document.getElementById('computer-score');
+        const resetBtn = document.getElementById('reset-btn');
+
+        let playerScore = 0;
+        let computerScore = 0;
+        const options = ['Stone', 'Paper', 'Scissor'];
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const playerChoice = button.id;
+                const randomIndex = Math.floor(Math.random() * 3);
+                const computerChoice = options[randomIndex];
+
+                playerChoiceText.textContent = playerChoice;
+                computerChoiceText.textContent = computerChoice;
+
+                if (playerChoice === computerChoice) {
+                    resultText.textContent = "It's a Tie!";
+                } else if (
+                    (playerChoice === 'Stone' && computerChoice === 'Scissor') ||
+                    (playerChoice === 'Paper' && computerChoice === 'Stone') ||
+                    (playerChoice === 'Scissor' && computerChoice === 'Paper')
+                ) {
+                    resultText.textContent = "You Win!";
+                    playerScore++;
+                    playerScoreText.textContent = playerScore;
+                } else {
+                    resultText.textContent = "Computer Wins!";
+                    computerScore++;
+                    computerScoreText.textContent = computerScore;
+                }
+            });
+        });
+
+        resetBtn.addEventListener('click', () => {
+            playerScore = 0;
+            computerScore = 0;
+            playerScoreText.textContent = 0;
+            computerScoreText.textContent = 0;
+            playerChoiceText.textContent = '-';
+            computerChoiceText.textContent = '-';
+            resultText.textContent = 'Choose an option to start!';
+        });
+    </script>
+</body>
+</html>
